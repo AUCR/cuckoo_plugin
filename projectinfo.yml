@@ -1,0 +1,21 @@
+info:
+  project_name: "aucr"
+  project_start_date: 01/08/2018
+  name: "aucr"
+  authors: "Wyatt Roersma, Devin Smith"
+  authors_email: "wyattroersma@gmail.com"
+  description: "AUCR is a flask micro services framework."
+  license: 'GPL-3.0'
+  classifiers:
+    - 'Development Status :: 4 - Beta'
+    - 'Intended Audience :: Developers'
+    - 'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)'
+    - 'Programming Language :: Python :: 3.6'
+  url: 'aucr.io'
+
+
+version:
+  major: 0
+  minor: 0
+  revision: 0
+  release: 1
