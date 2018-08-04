@@ -1,17 +1,17 @@
 info:
-  project_name: "aucr"
-  project_start_date: 01/08/2018
-  name: "aucr"
+  project_name: "cuckoo"
+  project_start_date: 08/03/2018
+  name: "cuckoo"
   authors: "Wyatt Roersma, Devin Smith"
   authors_email: "wyattroersma@gmail.com"
-  description: "AUCR is a flask micro services framework."
+  description: "The cuckoo plugin is a micro service for the AUCR framework."
   license: 'GPL-3.0'
   classifiers:
     - 'Development Status :: 4 - Beta'
     - 'Intended Audience :: Developers'
     - 'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)'
     - 'Programming Language :: Python :: 3.6'
-  url: 'aucr.io'
+  url: 'https://github.com/aucr/cuckoo'
 
 
 version:

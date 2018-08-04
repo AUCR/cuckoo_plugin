@@ -20,6 +20,8 @@ From the AUCR/app/plugins dir just git clone https://github.com/AUCR/cuckoo and 
     cd ../..
     EXPORT FLASK_APP=aucr.py
     flask run --host=127.0.0.1
+    
+    
 ### Install cuckoo in whatever way you prefer 
 Setting up cuckoo isn't supported in this guide
 The only thing that is required is the os environment variable CUCKOO_API_URL to best set to the cuckoo web front end.
