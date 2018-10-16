@@ -3,6 +3,7 @@
 import os
 from app.plugins.tasks.mq import get_a_task_mq
 from app.plugins.cuckoo.cuckoo import submit_file_to_cuckoo
+from app.plugins.cuckoo.routes import cuckoo_page
 from multiprocessing import Process
 from app.plugins.reports.storage.elastic_search import index_data_to_es
 
@@ -25,6 +26,7 @@ def load(app):
     rabbitmq_server = os.environ.get('RABBITMQ_SERVER')
     rabbitmq_username = os.environ.get('RABBITMQ_USERNAME')
     rabbitmq_password = os.environ.get('RABBITMQ_PASSWORD')
+    app.register_blueprint(cuckoo_page, url_prefix='/cuckoo')
     if cuckoo_processor:
         p = Process(target=get_a_task_mq, args=(tasks, call_back, rabbitmq_server, rabbitmq_username,
                                                 rabbitmq_password))

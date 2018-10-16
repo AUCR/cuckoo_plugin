@@ -1,0 +1,52 @@
+<div class="mdl-shadow--2dp">
+    <div class="mdl-card__title">
+        <h5 class="mdl-card__title-text">{{ title }}</h5>
+    </div>
+    <table class="mdl-data-table mdl-js-data-table">
+        <thead>
+            <th>{{ title }}</th>
+            <th></th>
+        </thead>
+        <tbody>
+        {% for header in table_dict %}
+            <tr>
+                <td style="text-align:left">
+                    <b>{{ header }}</b>
+                </td>
+                <td style="text-align:left">
+                    {{ table_dict[header] }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="mdl-shadow--2dp">
+    <table class="mdl-data-table mdl-js-data-table">
+        <thead>
+            <th style="text-align:left">Vendor</th>
+            <th style="text-align:left">Detection</th>
+            <th style="text-align:left">Version</th>
+            <th style="text-align:left">Signature</th>
+            <th style="text-align:left">Normalized</th>
+        </thead>
+        <tbody>
+        {% for values in virus_total_scan %}
+            {% if virus_total_scan[values]["detected"] %}
+                <tr>
+                    <td style="text-align:left">
+                        <b>{{ values }}</b>
+                    </td>
+                {% for items in virus_total_scan[values] %}
+                    <td style="text-align:left">
+                        {% if virus_total_scan[values][items] %}
+                            {{  virus_total_scan[values][items] }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
