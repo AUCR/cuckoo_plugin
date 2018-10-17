@@ -6,7 +6,7 @@ from os import environ
 from app import db
 from flask import render_template, request, Blueprint
 from flask_babel import _
-from app.plugins.analysis.file.json import flatten_dict
+from dataparserlib.dictionary import flatten_dictionary
 from flask_login import login_required, current_user
 
 
@@ -23,11 +23,11 @@ def cuckoo_report():
         report = ujson.load(reports_file)
     virus_total_report = report["virustotal"]
     virus_total_scan = report["virustotal"]["scans"]
-    machine_dict = flatten_dict(report["info"]["machine"])
+    machine_dict = flatten_dictionary(report["info"]["machine"])
     del report["info"]["git"]
     del report["info"]["machine"]
-    data_report = flatten_dict(report["target"]["file"])
-    info_report = flatten_dict(report["info"])
+    data_report = flatten_dictionary(report["target"]["file"])
+    info_report = flatten_dictionary(report["info"])
     info_dict = info_report["report"]
     summary_report = data_report["report"]
     del info_dict["options"]
@@ -46,9 +46,9 @@ def cuckoo_report():
     del machine_dict["shutdown_on"]
     del virus_total_report["scans"]
     del virus_total_report["summary"]
-    virustotal_report = flatten_dict(virus_total_report)
+    virustotal_report = flatten_dictionary(virus_total_report)
     virustotal_report["report"]["detection"] = str(str(virustotal_report["report"]["positives"]) + "/" +
-                                                 str(virustotal_report["report"]["total"]))
+                                                   str(virustotal_report["report"]["total"]))
     del virustotal_report["report"]["scan_id"]
     del virustotal_report["report"]["sha1"]
     del virustotal_report["report"]["response_code"]
@@ -61,7 +61,7 @@ def cuckoo_report():
     list_value_strings = ""
     for list_value in report["strings"]:
         list_value_strings = list_value_strings + str(list_value + "\n")
-    classification = flatten_dict(report["classification"])
+    classification = flatten_dictionary(report["classification"])
     summary_report["Family"] = classification["report"]["family"]
     summary_report["Category"] = classification["report"]["category"]
     for values in virus_total_scan:
