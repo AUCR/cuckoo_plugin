@@ -1,0 +1,8 @@
+main:
+  user: [
+    link : [
+      page: 'cuckoo.dashboard',
+      icon: 'web',
+      title: 'Cuckoo'
+    ]
+  ]

@@ -9,11 +9,16 @@ from flask_babel import _
 from dataparserlib.dictionary import flatten_dictionary
 from flask_login import login_required, current_user
 
-
 cuckoo_page = Blueprint('cuckoo', __name__, static_folder='/cuckoo/', template_folder='templates')
 
 
-@cuckoo_page.route('/cuckoo-report', methods=['GET', 'POST'])
+@cuckoo_page.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
+
+@cuckoo_page.route('/cuckoo_report', methods=['GET', 'POST'])
 @login_required
 def cuckoo_report():
     """Return the Cuckoo the AUCR Team page."""

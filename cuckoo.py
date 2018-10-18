@@ -1,5 +1,28 @@
+"""AUCR Cuckoo plugin function library."""
+# coding=utf-8
 import os
 import requests
+import udatetime
+from app import db, create_app
+from app.plugins.cuckoo.models import CuckooReports
+
+
+def call_back(ch, method, properties, file_hash):
+    """Cuckoo Processing call back function."""
+    app = create_app()
+    db.init_app(app)
+    report = submit_file_to_cuckoo(file_hash)
+    cuckoo_url = os.environ.get('CUCKOO_URL')
+    report_list_ids = []
+    with app.app_context():
+        url_list = []
+        for items in report:
+            url_list.append(str(cuckoo_url + "/analysis/" + str(items)))
+            report_list_ids.append(str(items))
+        new_cuckoo = CuckooReports(url=url_list, md5_hash=file_hash.decode("utf-8"), modify_time=udatetime.utcnow(),
+                                   report_ids=report_list_ids)
+        db.session.add(new_cuckoo)
+        db.session.commit()
 
 
 def submit_file_to_cuckoo(file_hash):
