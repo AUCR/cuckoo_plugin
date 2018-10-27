@@ -3,8 +3,8 @@
 import os
 import requests
 import udatetime
-from app import db, create_app
-from app.plugins.cuckoo.models import CuckooReports
+from aucr_app import db, create_app
+from aucr_app.plugins.cuckoo.models import CuckooReports
 
 
 def call_back(ch, method, properties, file_hash):

@@ -3,9 +3,9 @@
 import os
 
 
-from app.plugins.tasks.mq import get_a_task_mq
-from app.plugins.cuckoo.cuckoo import submit_file_to_cuckoo, call_back
-from app.plugins.cuckoo.routes import cuckoo_page
+from aucr_app.plugins.tasks.mq import get_a_task_mq
+from aucr_app.plugins.cuckoo.cuckoo import submit_file_to_cuckoo, call_back
+from aucr_app.plugins.cuckoo.routes import cuckoo_page
 from multiprocessing import Process
 
 

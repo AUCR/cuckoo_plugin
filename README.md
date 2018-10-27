@@ -12,10 +12,10 @@ Please contact us in the organization chat and room to ask any questions!
 
 ## How to install
 
-From the AUCR/app/plugins dir just git clone https://github.com/AUCR/cuckoo and run the flask app.
+From the AUCR/aucr_app/plugins dir just git clone https://github.com/AUCR/cuckoo and run the flask app.
 
     git clone https://github.com/AUCR/AUCR
-    cd AUCR/app/plugins
+    cd AUCR/aucr_app/plugins
     git clone https://github.com/AUCR/cuckoo
     cd ../..
     EXPORT FLASK_APP=aucr.py

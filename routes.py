@@ -3,7 +3,7 @@
 import ujson
 import udatetime
 from os import environ
-from app import db
+from aucr_app import db
 from flask import render_template, request, Blueprint
 from flask_babel import _
 from dataparserlib.dictionary import flatten_dictionary
@@ -22,8 +22,9 @@ def dashboard():
 @login_required
 def cuckoo_report():
     """Return the Cuckoo the AUCR Team page."""
-    submitted_report_id = str(request.args.get("id"))
-    cuckoo_path = environ["CUCKOO_REPORT_PATH"]
+    #submitted_report_id = str(request.args.get("id"))
+    submitted_report_id = str(894)
+    cuckoo_path = environ["CUCKOO_STORAGE_PATH"]
     with open(str(cuckoo_path + submitted_report_id + "/reports/report.json"), "rb") as reports_file:
         report = ujson.load(reports_file)
     virus_total_report = report["virustotal"]
