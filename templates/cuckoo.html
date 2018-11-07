@@ -1,7 +1,41 @@
+{#change back to base.html for original version #}
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+	<style>
+	textarea {
+		font-family: monospace;
+	}
+	var {
+		color: red;
+		font-style: italic;
+	}
+	img {
+		width: 20%;
+     }
+
+	</style>
+	<main role="main" class="main-content">
+		<div class = "mdl-tabs mdl-js-tabs">
+			<div class = "mdl-tabs__tab-bar">
+				 <a href = "#summary-panel" class="mdl-tabs__tab">Summary</a>
+				 <a href = "#static-analysis-panel" class="mdl-tabs__tab">Static Analysis</a>
+				 <a href = "#virustotal-panel" class="mdl-tabs__tab">AV</a>
+				 <a href = "#extracted-panel" class="mdl-tabs__tab">Extracted Files</a>
+				 <a href = "#debug-panel" class="mdl-tabs__tab">Logs</a>
+			</div>
+
+            <div class = "mdl-tabs__panel" id = "summary-panel">
+
+				<div class="mdl-grid">
+
+					<div class="mdl-cell mdl-cell--8-col">
+
+                        {% with table_dict=summary_dict, title="Summary"  %}
+						    {% include "subtemplates/_form_mdl_card.html" %}
+					    {% endwith %}
+
     <style>
     textarea {
         font-family: monospace;
@@ -42,95 +76,127 @@
                             <img src="{{ url_for("cuckoo.static", filename=screenshot) }}"/>
                         {% endfor %}
                     </div>
-                </div>
-            </div>
-            <div class="mdl-tabs__panel" id="static-analysis-panel">
-                <div class="mdl-grid">
-                    <div class="mdl-shadow--4dp">
-                        <h5>File Strings</h5>
-                        <pre>
-                            <textarea id="file-strings" class="mdl-textfield__input" cols="120" rows="20" readonly>{{ file_strings }}</textarea>
-                        </pre>
-                        {% if hex_report %}
-                        <div class="well" style="font-family:monospace;width:100%;">
-                            {% for string in hex_report %}
-                                <div style="word-break: break-all;">{{string}}</div>
+
+
+
+                    <div class="mdl-cell mdl-cell--6-col">
+                        <div class="wide-card mdl-card">
+                            <h5 class="mdl-card__title-text">Screenshots</h5>
+                            {% for screenshot in screenshot_files %}
+                                <img src="{{ url_for("cuckoo.static", filename=screenshot) }}"/>
                             {% endfor %}
                         </div>
-                        {% endif %}
-                        {% if macro_list %}
-                        <div class="well" style="font-family:monospace;width:100%;">
-                                <div class="mdl-shadow--2dp">
-                                    <table class="mdl-data-table mdl-js-data-table">
-                                        <thead>
-                                            <th>Office Macros</th>
-                                            <th></th>
-                                        </thead>
-                                        <tbody>
-                                        {% for values in macro_list["macros"] %}
-                                                {% for items in values %}
-                                                    <tr>
-                                                    <td style="text-align:left">{{ items }}</td>
-                                                    {% if "orig_code" in items %}
-                                                        <td style="text-align:left">
-                                                            <textarea class="mdl-textfield__input" cols="120" rows="10" readonly>{{ values[items] }}</textarea>
-                                                        </td>
-                                                    {% elif "deobf" in items %}
-                                                        <td style="text-align:left">
-                                                            <textarea class="mdl-textfield__input" cols="120" rows="10" readonly>{{ values[items] }}</textarea>
-                                                        </td>
-                                                    {% else %}
-                                                        <td style="text-align:left">
-                                                            {{  values[items] }}
-                                                        </td>
-                                                    {% endif %}
-                                                    </tr>
-                                                {% endfor %}
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
-            </div>
-            <div class="mdl-tabs__panel" id="virustotal-panel">
-                <div class="mdl-grid">
-                {% with table_dict=virus_total_dict, title="Virustotal Report"  %}
-                        {% include "virustotal.html" %}
-                {% endwith %}
-                </div>
-            </div>
-            <div class="mdl-tabs__panel" id="extracted-panel">
-                <div class="mdl-grid">
-                    {% for extracted_file in extracted_files %}
-                            {% with table_dict=extracted_file, title="Extracted"  %}
-                                    {% include "subtemplates/_form_mdl_card.html" %}
-                            {% endwith %}
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="mdl-tabs__panel" id="debug-panel">
-                <div class="mdl-grid">
-                    <div class="mdl-shadow--4dp">
-                        <h5>
-                            Agent Log File
-                        </h5>
-                        <pre>
-                            <textarea id="log-strings" class="mdl-textfield__input" cols="120" rows="20" readonly>{{ log_list }}</textarea>
-                        </pre>
+			</div>
+
+            <div class="mdl-tabs__panel" id="static-analysis-panel">
+				<div class="mdl-grid">
+					<div class="wide-card mdl-card">
+						<h5 class="mdl-card__title-text">File Strings</h5>
+                    {#TODO#}
+                    {#add logic to remove blank lines  #}
+
+						<pre>
+							<textarea id="file-strings" class="mdl-textfield__input" cols="120" rows="20" readonly>{{ file_strings }}</textarea>
+						</pre>
+						{% if hex_report %}
+						<div class="well" style="font-family:monospace;width:100%;">
+							{% for string in hex_report %}
+								<div style="word-break: break-all;">{{string}}</div>
+							{% endfor %}
+						</div>
+						{% endif %}
+						{% if macro_list %}
+						<div class="well" style="font-family:monospace;width:100%;">
+								<div class="mdl-shadow--2dp">
+									<table class="mdl-data-table mdl-js-data-table">
+										<thead>
+											<th>Office Macros</th>
+                                        <th></th>
+										</thead>
+										<tbody>
+										{% for values in macro_list["macros"] %}
+												{% for items in values %}
+													<tr>
+													<td style="text-align:left">{{ items }}</td>
+													{% if "orig_code" in items %}
+														<td style="text-align:left">
+															<textarea class="mdl-textfield__input" cols="120" rows="10" readonly>{{ values[items] }}</textarea>
+														</td>
+													{% elif "deobf" in items %}
+														<td style="text-align:left">
+															<textarea class="mdl-textfield__input" cols="120" rows="10" readonly>{{ values[items] }}</textarea>
+														</td>
+													{% else %}
+														<td style="text-align:left">
+															{{  values[items] }}
+														</td>
+													{% endif %}
+													</tr>
+												{% endfor %}
+										{% endfor %}
+										</tbody>
+									</table>
+								</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="mdl-tabs__panel" id="virustotal-panel">
+				<div class="mdl-grid">
+				{% with table_dict=virus_total_dict, title="Virustotal Report"  %}
+						{% include "virustotal.html" %}
+				{% endwith %}
+				</div>
+			</div>
+			<div class="mdl-tabs__panel" id="extracted-panel">
+				<div class="mdl-grid">
+
+					{% for extracted_file in extracted_files %}
+							{% with table_dict=extracted_file, title="Extracted"  %}
+									{% include "subtemplates/_form_mdl_card.html" %}
+							{% endwith %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="mdl-tabs__panel" id="debug-panel">
+				<div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col">
+
+                        {% with table_dict=info_dict, title="Info"  %}
+						    {% include "subtemplates/_form_mdl_card.html" %}
+					    {% endwith %}
                     </div>
-                    <div class="mdl-shadow--4dp">
-                        <h5>
-                            Cuckoo Log File
-                        </h5>
-                        <pre>
-                            <textarea id="cuckoo-strings" class="mdl-textfield__input" cols="120" rows="20" readonly>{{ log_cuckoo }}</textarea>
-                        </pre>
+
+                    <div class="mdl-cell mdl-cell--6-col">
+                        {% with table_dict=vm_dict, title="Virtual Machine"  %}
+						    {% include "subtemplates/_form_mdl_card.html" %}
+                        {% endwith %}
+
                     </div>
                 </div>
-            </div>
-        </div>
-    </main>
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col">
+					<div class="wide-card mdl-card">
+						<h5 class="mdl-card__title-text">Agent Log File</h5>
+
+						<pre>
+							<textarea id="log-strings" class="mdl-textfield__input" cols="60" rows="20" readonly>{{ log_list }}</textarea>
+						</pre>
+					</div>
+                    </div>
+                    <div class="mdl-cell mdl-cell--6-col">
+					<div class="wide-card mdl-card">
+						<h5 class="mdl-card__title-text">Cuckoo Log File</h5>
+						<pre>
+							<textarea id="cuckoo-strings" class="mdl-textfield__input" cols="60" rows="20" readonly>{{ log_cuckoo }}</textarea>
+						</pre>
+					</div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</main>
 {% endblock %}
