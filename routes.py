@@ -3,7 +3,7 @@
 import ujson
 import udatetime
 from os import environ
-from app import db
+from aucr_app import db
 from flask import render_template, request, Blueprint
 from flask_babel import _
 # from dataparserlib.dictionary import flatten_dictionary
@@ -52,6 +52,15 @@ def flatten_dictionary(json_data):
 cuckoo_page = Blueprint('cuckoo', __name__, static_folder='/cuckoo/', template_folder='templates')
 
 
+cuckoo_page = Blueprint('cuckoo', __name__, static_folder='/cuckoo/', template_folder='templates')
+
+
+@cuckoo_page.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
+
 @cuckoo_page.route('/cuckoo_report', methods=['GET', 'POST'])
 @login_required
 def cuckoo_report():
@@ -60,6 +69,12 @@ def cuckoo_report():
     # submitted_report_id = str(894)
     cuckoo_path = environ['CUCKOO_STORAGE_PATH']
     with open(str(cuckoo_path + submitted_report_id + '/reports/report.json'), "rb") as reports_file:
+
+    #submitted_report_id = str(request.args.get("id"))
+    submitted_report_id = str(894)
+    cuckoo_path = environ["CUCKOO_STORAGE_PATH"]
+    with open(str(cuckoo_path + submitted_report_id + "/reports/report.json"), "rb") as reports_file:
+
         report = ujson.load(reports_file)
     virus_total_report = report["virustotal"]
     virus_total_scan = report["virustotal"]["scans"]
