@@ -1,0 +1,8 @@
+main:
+  user: [
+    link : [
+      page: 'cuckoo.cuckoo_report',
+      icon: 'web',
+      title: 'Cuckoo'
+    ]
+  ]
