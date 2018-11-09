@@ -1,0 +1,23 @@
+<div class="wide-card mdl-card">
+    <div class="mdl-card__title">
+        <h5 class="mdl-card__title-text">{{ title }}</h5>
+    </div>
+    <table class="mdl-data-table mdl-js-data-table">
+        <thead>
+            <th>{{ title }}</th>
+            <th></th>
+        </thead>
+        <tbody>
+        {% for header in table_dict %}
+            <tr>
+                <td style="text-align:left">
+                    <b>{{ header }}</b>
+                </td>
+                <td style="text-align:left">
+                    {{ table_dict[header] }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

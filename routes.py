@@ -140,8 +140,11 @@ def cuckoo_report():
     if "static" in report:
         if "office" in report["static"]:
             macro_list = report["static"]["office"]
+    summary_headers = ["sha1", "name", "Family", "Category"]
+    vt_headers = ["scan_date", "permalink", "detection"]
     return render_template('cuckoo.html', summary_dict=summary_report, info_dict=info_dict, vm_dict=machine_dict,
                            virus_total_dict=virustotal_report["report"], file_strings=list_value_strings,
                            clasification_dict=classification["report"], virus_total_scan=virus_total_scan,
                            extracted_files=test_list, screenshot_files=screenshots_list, log_list=log_value_strings,
-                           log_cuckoo=cuckoo_value_strings, hex_report=hex_list, macro_list=macro_list)
+                           log_cuckoo=cuckoo_value_strings, hex_report=hex_list, macro_list=macro_list,
+                           summary_headers=summary_headers, vt_headers=vt_headers)
