@@ -18,7 +18,8 @@
 	</style>
 	<main role="main" class="main-content">
 		<div class = "mdl-tabs mdl-js-tabs">
-			<div class = "mdl-tabs__tab-bar">
+			    <a href = "#landing" class = "mdl-tabs"></a>
+            <div class = "mdl-tabs__tab-bar">
 				 <a href = "#summary-panel" class="mdl-tabs__tab">Summary</a>
 				 <a href = "#static-analysis-panel" class="mdl-tabs__tab">Static Analysis</a>
 				 <a href = "#virustotal-panel" class="mdl-tabs__tab">AV</a>
@@ -26,58 +27,41 @@
 				 <a href = "#debug-panel" class="mdl-tabs__tab">Logs</a>
 			</div>
 
+            <div class = "mdl-tabs__panel is-active" id = "landing">
+                <div class="mdl-grid">
+
+                        <div class="mdl-cell mdl-cell--4-col">
+                            {% with table_dict=summary_dict, title="Summary", header_list=summary_headers %}
+                                {% include "subtemplates/_form_mdl_card_fp_summary.html" %}
+                            {% endwith %}
+                        </div>
+
+                        <div class = "mdl-cell mdl-cell--4-col">
+                            {% with table_dict=virus_total_dict, title="Virustotal", header_list=vt_headers  %}
+                                {% include "subtemplates/_form_mdl_card_fp_summary.html" %}
+                            {% endwith %}
+
+                        </div>
+
+                </div>
+            </div>
+
             <div class = "mdl-tabs__panel" id = "summary-panel">
 
 				<div class="mdl-grid">
 
-					<div class="mdl-cell mdl-cell--8-col">
-
+					<div class="mdl-cell mdl-cell--7-col">
                         {% with table_dict=summary_dict, title="Summary"  %}
 						    {% include "subtemplates/_form_mdl_card.html" %}
 					    {% endwith %}
-
-    <style>
-    textarea {
-        font-family: monospace;
-    }
-    var {
-        color: red;
-        font-style: italic;
-    }
-    img {
-        width: 20%;
-    }
-    </style>
-    <main role="main" class="main-content">
-        <div class="mdl-tabs mdl-js-tabs">
-            <div class="mdl-tabs__tab-bar">
-                 <a href="#summary-panel" class="mdl-tabs__tab is-active">Summary</a>
-                 <a href="#static-analysis-panel" class="mdl-tabs__tab">Static Analysis</a>
-                 <a href="#virustotal-panel" class="mdl-tabs__tab">AV</a>
-                 <a href="#extracted-panel" class="mdl-tabs__tab">Extracted Files</a>
-                 <a href="#debug-panel" class="mdl-tabs__tab">Logs</a>
-            </div>
-            <div class="mdl-tabs__panel is-active" id="summary-panel">
-                <div class="mdl-grid">
-                    {% with table_dict=info_dict, title="Info"  %}
-                        {% include "subtemplates/_form_mdl_card_table_row.html" %}
-                    {% endwith %}
-                    {% with table_dict=vm_dict, title="Virtual Machine"  %}
-                        {% include "subtemplates/_form_mdl_card_table_row.html" %}
-                    {% endwith %}
-                    {% with table_dict=summary_dict, title="Summary"  %}
-                        {% include "subtemplates/_form_mdl_card.html" %}
-                    {% endwith %}
-                </div>
-                <div class="mdl-grid">
-                    <div class="mdl-shadow--4dp">
-                        <h5>Screenshots</h5>
-                        {% for screenshot in screenshot_files %}
-                            <img src="{{ url_for("cuckoo.static", filename=screenshot) }}"/>
-                        {% endfor %}
                     </div>
 
+                    <div class = "mdl-cell mdl-cell--3-col">
+                        {% with table_dict=virus_total_dict, title="Virustotal"  %}
+						    {% include "virustotal-small.html" %}
+				        {% endwith %}
 
+                    </div>
 
                     <div class="mdl-cell mdl-cell--6-col">
                         <div class="wide-card mdl-card">
@@ -87,8 +71,10 @@
                             {% endfor %}
                         </div>
                     </div>
+
                 </div>
-			</div>
+
+            </div>
 
             <div class="mdl-tabs__panel" id="static-analysis-panel">
 				<div class="mdl-grid">
