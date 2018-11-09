@@ -2,7 +2,7 @@ info:
   project_name: "cuckoo"
   project_start_date: 08/03/2018
   name: "cuckoo"
-  authors: "Wyatt Roersma, Devin Smith"
+  authors: "Wyatt Roersma, Devin Smith, Molly Heaven-Hoyle"
   authors_email: "wyattroersma@gmail.com"
   description: "The cuckoo plugin is a micro service for the AUCR framework."
   license: 'GPL-3.0'
@@ -18,4 +18,4 @@ version:
   major: 0
   minor: 0
   revision: 0
-  release: 5
+  release: 6
