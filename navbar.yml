@@ -1,7 +1,6 @@
 main:
   user: [
     link : [
-      page: 'cuckoo.cuckoo_report',
       page: 'cuckoo.dashboard',
       icon: 'web',
       title: 'Cuckoo'

@@ -65,16 +65,11 @@ def dashboard():
 @login_required
 def cuckoo_report():
     """Return the Cuckoo the AUCR Team page."""
-    submitted_report_id = str(request.args.get("id"))
-    # submitted_report_id = str(894)
-    cuckoo_path = environ['CUCKOO_STORAGE_PATH']
-    with open(str(cuckoo_path + submitted_report_id + '/reports/report.json'), "rb") as reports_file:
-
-    #submitted_report_id = str(request.args.get("id"))
+    # submitted_report_id = str(request.args.get("id"))
     submitted_report_id = str(894)
-    cuckoo_path = environ["CUCKOO_STORAGE_PATH"]
-    with open(str(cuckoo_path + submitted_report_id + "/reports/report.json"), "rb") as reports_file:
+    cuckoo_path = environ['CUCKOO_STORAGE_PATH']
 
+    with open(str(cuckoo_path + submitted_report_id + "/reports/report.json"), "rb") as reports_file:
         report = ujson.load(reports_file)
     virus_total_report = report["virustotal"]
     virus_total_scan = report["virustotal"]["scans"]
