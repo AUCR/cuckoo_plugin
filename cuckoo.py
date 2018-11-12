@@ -3,6 +3,7 @@
 import os
 import requests
 import udatetime
+from logging import error
 from aucr_app import db, create_app
 from aucr_app.plugins.cuckoo.models import CuckooReports
 
@@ -14,15 +15,18 @@ def call_back(ch, method, properties, file_hash):
     report = submit_file_to_cuckoo(file_hash)
     cuckoo_url = os.environ.get('CUCKOO_URL')
     report_list_ids = []
+    url_list = []
+    for items in report:
+        url_list.append(str(cuckoo_url + "/analysis/" + str(items)))
+        report_list_ids.append(str(items))
     with app.app_context():
-        url_list = []
-        for items in report:
-            url_list.append(str(cuckoo_url + "/analysis/" + str(items)))
-            report_list_ids.append(str(items))
-        new_cuckoo = CuckooReports(url=url_list, md5_hash=file_hash.decode("utf-8"), modify_time=udatetime.utcnow(),
-                                   report_ids=report_list_ids)
-        db.session.add(new_cuckoo)
-        db.session.commit()
+        try:
+            new_cuckoo = CuckooReports(url=str(url_list), md5_hash=file_hash.decode("utf-8"),
+                                       modify_time=udatetime.utcnow(), report_ids=report_list_ids)
+            db.session.add(new_cuckoo)
+            db.session.commit()
+        except:
+            error("Problem creating the cuckoo report")
 
 
 def submit_file_to_cuckoo(file_hash):
@@ -32,9 +36,8 @@ def submit_file_to_cuckoo(file_hash):
     cuckoo_auth_password = os.environ.get('CUCKOO_API_PASSWORD')
     upload_server = os.environ.get('CUCKOO_API_URL')
     file_path = str(upload_path + file_hash.decode("utf-8"))
-    r = requests.post(upload_server + "/tasks/create/submit", files=[
-                     ("files", open(file_path, "rb"))
-                     ], auth=(cuckoo_auth_user, cuckoo_auth_password))
+    r = requests.post(upload_server + "/tasks/create/submit", files=[("files", open(file_path, "rb"))],
+                      auth=(cuckoo_auth_user, cuckoo_auth_password), timeout=300)
     task_ids = r.json()["task_ids"]
     return task_ids
 
