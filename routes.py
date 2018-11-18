@@ -14,8 +14,8 @@ cuckoo_page = Blueprint('cuckoo', __name__, static_folder='/cuckoo/', template_f
 
 @cuckoo_page.route('/dashboard', methods=['GET', 'POST'])
 @login_required
-def dashboard():
-    return render_template('dashboard.html')
+def cuckoo_dashboard():
+    return render_template('cuckoo_dashboard.html')
 
 
 @cuckoo_page.route('/cuckoo_report', methods=['GET', 'POST'])
