@@ -108,7 +108,7 @@ def cuckoo_report():
             macro_list = report["static"]["office"]
     summary_headers = ["sha1", "name", "Family", "Category"]
     vt_headers = ["scan_date", "permalink", "detection"]
-    return render_template('cuckoo.html', summary_dict=summary_report, info_dict=info_dict, vm_dict=machine_dict,
+    return render_template('cuckoo_report.html', summary_dict=summary_report, info_dict=info_dict, vm_dict=machine_dict,
                            virus_total_dict=virustotal_report["report"], file_strings=list_value_strings,
                            clasification_dict=classification["report"], virus_total_scan=virus_total_scan,
                            extracted_files=test_list, screenshot_files=screenshots_list, log_list=log_value_strings,

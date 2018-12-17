@@ -3,6 +3,7 @@
 import os
 import requests
 import udatetime
+import json
 from logging import error
 from aucr_app import db, create_app
 from aucr_app.plugins.cuckoo.models import CuckooReports
@@ -37,7 +38,7 @@ def submit_file_to_cuckoo(file_hash):
     upload_server = os.environ.get('CUCKOO_API_URL')
     file_path = str(upload_path + file_hash.decode("utf-8"))
     r = requests.post(upload_server + "/tasks/create/submit", files=[("files", open(file_path, "rb"))],
-                      auth=(cuckoo_auth_user, cuckoo_auth_password), timeout=300)
+                      auth=(cuckoo_auth_user, cuckoo_auth_password), timeout=600)
     task_ids = r.json()["task_ids"]
     return task_ids
 
