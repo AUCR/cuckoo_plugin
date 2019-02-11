@@ -1,4 +1,4 @@
-"""AUCR cuckoo plugin route page handler."""
+"""AUCR cuckoo_plugin plugin route page handler."""
 # coding=utf-8
 import ujson
 import udatetime
@@ -9,7 +9,7 @@ from flask_babel import _
 from dataparserlib.dictionary import flatten_dictionary
 from flask_login import login_required, current_user
 
-cuckoo_page = Blueprint('cuckoo', __name__, static_folder='/cuckoo/', template_folder='templates')
+cuckoo_page = Blueprint('cuckoo_plugin', __name__, static_folder='/cuckoo_plugin/', template_folder='templates')
 
 
 @cuckoo_page.route('/dashboard', methods=['GET', 'POST'])
@@ -22,8 +22,7 @@ def cuckoo_dashboard():
 @login_required
 def cuckoo_report():
     """Return the Cuckoo the AUCR Team page."""
-    # submitted_report_id = str(request.args.get("id"))
-    submitted_report_id = str(894)
+    submitted_report_id = str(request.args.get("id"))
     cuckoo_path = environ['CUCKOO_STORAGE_PATH']
     with open(str(cuckoo_path + submitted_report_id + "/reports/report.json"), "rb") as reports_file:
         report = ujson.load(reports_file)

@@ -67,7 +67,7 @@
                         <div class="wide-card mdl-card">
                             <h5 class="mdl-card__title-text">Screenshots</h5>
                             {% for screenshot in screenshot_files %}
-                                <img src="{{ url_for("cuckoo.static", filename=screenshot) }}"/>
+                                <img src="{{ url_for("cuckoo_plugin.static", filename=screenshot) }}"/>
                             {% endfor %}
                         </div>
                     </div>

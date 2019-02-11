@@ -6,7 +6,7 @@ import udatetime
 import json
 from logging import error
 from aucr_app import db, create_app
-from aucr_app.plugins.cuckoo.models import CuckooReports
+from aucr_app.plugins.cuckoo_plugin.models import CuckooReports
 
 
 def call_back(ch, method, properties, file_hash):
@@ -31,7 +31,7 @@ def call_back(ch, method, properties, file_hash):
 
 
 def submit_file_to_cuckoo(file_hash):
-    # Function to submit uploaded file to cuckoo for processing
+    """Function to submit uploaded file to the cuckoo sandbox for processing"""
     upload_path = os.environ.get('FILE_FOLDER')
     cuckoo_auth_user = os.environ.get('CUCKOO_API_USER')
     cuckoo_auth_password = os.environ.get('CUCKOO_API_PASSWORD')
@@ -44,7 +44,7 @@ def submit_file_to_cuckoo(file_hash):
 
 
 def submit_url_to_cuckoo(url):
-    # Function to submit url file to cuckoo for processing
+    """Function to submit url file to the cuckoo sandbox for processing."""
     upload_server = os.environ.get('CUCKOO_API_URL')
     cuckoo_auth_user = os.environ.get('CUCKOO_API_USER')
     cuckoo_auth_password = os.environ.get('CUCKOO_API_PASSWORD')

@@ -1,7 +1,7 @@
 main:
   user: [
     link : [
-      page: 'cuckoo.cuckoo_dashboard',
+      page: 'cuckoo_plugin.cuckoo_dashboard',
       icon: 'web',
       title: 'Cuckoo'
     ]
