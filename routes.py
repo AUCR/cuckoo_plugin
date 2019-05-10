@@ -9,7 +9,7 @@ from flask_babel import _
 from dataparserlib.dictionary import flatten_dictionary
 from flask_login import login_required, current_user
 
-cuckoo_page = Blueprint('cuckoo_plugin', __name__, static_folder='/cuckoo_plugin/', template_folder='templates')
+cuckoo_page = Blueprint('cuckoo_plugin', __name__, static_folder='static', template_folder='templates')
 
 
 @cuckoo_page.route('/dashboard', methods=['GET', 'POST'])
@@ -66,22 +66,30 @@ def cuckoo_report():
     list_value_strings = ""
     for list_value in report["strings"]:
         list_value_strings = list_value_strings + str(list_value + "\n")
-    classification = flatten_dictionary(report["classification"])
-    summary_report["Family"] = classification["report"]["family"]
-    summary_report["Category"] = classification["report"]["category"]
+    if "classification" in report:
+        classification = flatten_dictionary(report["classification"])
+        summary_report["Family"] = classification["report"]["family"]
+        summary_report["Category"] = classification["report"]["category"]
+        summary_report["File score"] = str(str(info_dict["score"]) + "/" + str(10))
+        del info_dict["score"]
+    else:
+        classification = {}
+        summary_report["Family"] = "None"
+        summary_report["Category"] = "None"
+        summary_report["File score"] = 0
+        classification["report"] = {}
     for values in virus_total_scan:
         del virus_total_scan[values]["update"]
-    summary_report["File score"] = str(str(info_dict["score"]) + "/" + str(10))
-    del info_dict["score"]
-    extracted_files = report["extracted"]
     test_list = []
-    for extracted_file in extracted_files:
-        program_name = extracted_file["program"]
-        del extracted_file["program"]
-        extracted_file["First Seen"] = f'{udatetime.fromtimestamp(extracted_file["first_seen"]):%B %d, %Y, %H:%M:%S}'
-        del extracted_file["first_seen"]
-        extracted_file["Process Name"] = program_name
-        test_list.append(extracted_file)
+    if "extracted" in report:
+        extracted_files = report["extracted"]
+        for extracted_file in extracted_files:
+            program_name = extracted_file["program"]
+            del extracted_file["program"]
+            extracted_file["First Seen"] = f'{udatetime.fromtimestamp(extracted_file["first_seen"]):%B %d, %Y, %H:%M:%S}'
+            del extracted_file["first_seen"]
+            extracted_file["Process Name"] = program_name
+            test_list.append(extracted_file)
     del summary_report["path"]
     del summary_report["sha512"]
     screenshots = report["screenshots"]

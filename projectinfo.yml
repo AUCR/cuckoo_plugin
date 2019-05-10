@@ -10,7 +10,7 @@ info:
     - 'Development Status :: 4 - Beta'
     - 'Intended Audience :: Developers'
     - 'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)'
-    - 'Programming Language :: Python :: 3.6'
+    - 'Programming Language :: Python :: 3.7'
   url: 'https://github.com/aucr/cuckoo_plugin'
 
 
@@ -18,4 +18,4 @@ version:
   major: 0
   minor: 0
   revision: 1
-  release: 0
+  release: 1

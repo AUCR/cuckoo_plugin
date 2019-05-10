@@ -10,7 +10,7 @@ class CuckooReports(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(3072))
     report_ids = db.Column(db.String(3072))
-    md5_hash = db.Column(db.String(32), db.ForeignKey('uploaded_file_table.md5_hash'))
+    md5_hash = db.Column(db.String(32))
     modify_time = db.Column(db.DateTime)
 
     def __repr__(self):
