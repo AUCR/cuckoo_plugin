@@ -9,7 +9,10 @@ from flask_babel import _
 from dataparserlib.dictionary import flatten_dictionary
 from flask_login import login_required, current_user
 
-cuckoo_page = Blueprint('cuckoo_plugin', __name__, static_folder='static', template_folder='templates')
+cuckoo_page = Blueprint('cuckoo_plugin', __name__,
+                        static_folder='/cuckoo/',
+                        template_folder='templates'
+                        )
 
 
 @cuckoo_page.route('/dashboard', methods=['GET', 'POST'])
@@ -86,7 +89,8 @@ def cuckoo_report():
         for extracted_file in extracted_files:
             program_name = extracted_file["program"]
             del extracted_file["program"]
-            extracted_file["First Seen"] = f'{udatetime.fromtimestamp(extracted_file["first_seen"]):%B %d, %Y, %H:%M:%S}'
+            extracted_file["First Seen"] = \
+                f'{udatetime.fromtimestamp(extracted_file["first_seen"]):%B %d, %Y, %H:%M:%S}'
             del extracted_file["first_seen"]
             extracted_file["Process Name"] = program_name
             test_list.append(extracted_file)
@@ -115,9 +119,20 @@ def cuckoo_report():
             macro_list = report["static"]["office"]
     summary_headers = ["sha1", "name", "Family", "Category"]
     vt_headers = ["scan_date", "permalink", "detection"]
-    return render_template('cuckoo_report.html', summary_dict=summary_report, info_dict=info_dict, vm_dict=machine_dict,
-                           virus_total_dict=virustotal_report["report"], file_strings=list_value_strings,
-                           clasification_dict=classification["report"], virus_total_scan=virus_total_scan,
-                           extracted_files=test_list, screenshot_files=screenshots_list, log_list=log_value_strings,
-                           log_cuckoo=cuckoo_value_strings, hex_report=hex_list, macro_list=macro_list,
-                           summary_headers=summary_headers, vt_headers=vt_headers)
+    return render_template('cuckoo_report.html',
+                           summary_dict=summary_report,
+                           info_dict=info_dict,
+                           vm_dict=machine_dict,
+                           virus_total_dict=virustotal_report["report"],
+                           file_strings=list_value_strings,
+                           clasification_dict=classification["report"],
+                           virus_total_scan=virus_total_scan,
+                           extracted_files=test_list,
+                           screenshot_files=screenshots_list,
+                           log_list=log_value_strings,
+                           log_cuckoo=cuckoo_value_strings,
+                           hex_report=hex_list,
+                           macro_list=macro_list,
+                           summary_headers=summary_headers,
+                           vt_headers=vt_headers
+                           )

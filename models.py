@@ -15,3 +15,14 @@ class CuckooReports(db.Model):
 
     def __repr__(self):
         return '<Cuckoo Reports {}>'.format(self.id)
+
+    def to_dict(self):
+        """Return dictionary object type for API calls."""
+        data = {
+            'id': self.id,
+            'url': self.url,
+            'modify_time': self.modify_time.isoformat() + 'Z',
+            'report_ids': self.report_ids,
+            'md5_hash': self.md5_hash,
+        }
+        return data
